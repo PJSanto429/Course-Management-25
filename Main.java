@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.time.LocalTime;
+import java.util.Map;
+import java.util.HashMap;
 
 enum Department {
     CompSci,
@@ -20,6 +22,9 @@ public class Main {
 
     static ArrayList<Class> classes;
     static ArrayList<Student> students;
+
+    static ArrayList<String> studentOptions = new ArrayList<String>();
+    static ArrayList<String> professorOptions = new ArrayList<String>();
     
     public static ArrayList<Course> seedCourses() {
         ArrayList<Course> coursesToReturn = new ArrayList<Course>();
@@ -35,10 +40,6 @@ public class Main {
         // coursesToReturn.add(course4);
 
         return coursesToReturn;
-    }
-
-    public void test() {
-        System.out.println("Hello World");
     }
 
     public static ArrayList<Class> seedClasses(
@@ -205,19 +206,19 @@ public class Main {
 
         while (loggedIn == null) {
             try {
-                System.out.println("Logging in as a Professor(1) or Student(2)? ");
+                Utils.println("Logging in as a Professor(1) or Student(2)? ");
                 int userType = Integer.parseInt(input.nextLine());
 
                 if (userType != 1 && userType != 2) {
-                    System.out.println("Bad input. Please enter 1 for Professor or 2 for Student.");
+                    Utils.println("Bad input. Please enter 1 for Professor or 2 for Student.");
                     continue;
 
                 }
 
-                System.out.print("Enter username: ");
+                Utils.print("Enter username: ");
                 String username = input.nextLine();
 
-                System.out.print("Enter password: ");
+                Utils.print("Enter password: ");
                 String password = input.nextLine();
 
                 Person user = Person.logIn(username, password);
@@ -242,11 +243,11 @@ public class Main {
                             break;
                     }
                 } else {
-                    System.out.println("Login failed. Please check your username and password and try again.\n\n");
+                    Utils.println("Login failed. Please check your username and password and try again.\n\n");
                 }
 
             } catch (Exception e) {
-                System.out.println("Something went wrong logging in. Restarting...\n\n");
+                Utils.println("Something went wrong logging in. Restarting...\n\n");
             }
         }
 
@@ -257,90 +258,69 @@ public class Main {
         String type = "Student"; // * "Professor"
 
         ArrayList<String> options = new ArrayList<>();
-        options.add("View Courses");
-        options.add("View Professors");
-        options.add("View Classes");
-        options.add("View Students");
-        options.add("View Enrollments");
-        options.add("View Grades");
-        options.add("Log Out");
+        if (type.equals("Student")) {
+            int choice = studentOptions();
+            Utils.println("You chose: " + choice);
+        } else if (type.equals("Professor")) {
+            int choice = professorOptions();
+        }
     }
 
-    public static void studentOptions() {
-        // * Options for user
-        // 1. View Courses
-        // 2. View Professors
-        // 3. View Classes
-        // 4. View Students
-        // 5. View Enrollments
-        // 6. View Grades
-        // 7. Log Out
+    public static int studentOptions() {
+        Integer choice = null;
+        while (choice == null) {
+            Utils.println("What would you like to do?");
+
+            for (int i = 0; i < studentOptions.size(); i++) {
+                Utils.println(i + 1 + ") " + studentOptions.get(i));
+            }
+
+            int choiceToBe = Integer.parseInt(input.nextLine());
+
+            if (choiceToBe > 0 && choiceToBe <= studentOptions.size()) {
+                choice = choiceToBe;
+            } else {
+                Utils.println("Invalid input. Please try again.\n");
+            }
+        }
+        return choice;
+    }
+
+    public static int professorOptions() {
+        Integer choice = null;
+        while (choice == null) {
+            Utils.println("What would you like to do?");
+
+            for (int i = 0; i < professorOptions.size(); i++) {
+                Utils.println(i + 1 + ") " + professorOptions.get(i));
+            }
+
+            int choiceToBe = Integer.parseInt(input.nextLine());
+
+            if (choiceToBe > 0 && choiceToBe <= professorOptions.size()) {
+                choice = choiceToBe;
+            } else {
+                Utils.println("Invalid input. Please try again.\n");
+            }
+        }
+
+        return choice;
     }
 
     public static void mainLoop() {
         Person user = null;
 
-        System.out.println("Welcome to CourseManager 2025");
+        Utils.println("Welcome to CourseManager 2025");
 
         while (user == null) {
             user = handleLogIn();
-
-            if (user != null) {
-                System.out.println("User class type: " + user.getClass().getSimpleName().equals("Student"));
-            }
         }
 
-        // * Options for user
-        // 1. View Courses
-        // 2. View Professors
-        // 3. View Classes
-        // 4. View Students
-        // 5. View Enrollments
-        // 6. View Grades
-        // 7. Log Out
-
-        boolean running = true;
-        while (running) {
-            System.out.println("Please choose an option:");
-            System.out.println("1. View Courses");
-            System.out.println("2. View Professors");
-            System.out.println("3. View Classes");
-            System.out.println("4. View Students");
-            System.out.println("5. View Enrollments");
-            System.out.println("6. View Grades");
-            System.out.println("7. Log Out");
-
-            int choice = Integer.parseInt(input.nextLine());
-
-            switch (choice) {
-            case 1:
-                // Code to view courses
-                break;
-            case 2:
-                // Code to view professors
-                break;
-            case 3:
-                // Code to view classes
-                break;
-            case 4:
-                // Code to view students
-                break;
-            case 5:
-                // Code to view enrollments
-                break;
-            case 6:
-                // Code to view grades
-                break;
-            case 7:
-                running = false;
-                System.out.println("Logging out...");
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
-                break;
-            }
+        if (user instanceof Student) {
+            studentOptions();
+        } else if (user instanceof Professor) {
+            professorOptions();
         }
-
     }
 
     public static void main(String[] args) {
@@ -352,7 +332,21 @@ public class Main {
         classes = seedClasses(random, courses, professors);
         students = seedStudents(random, classes);
 
-        // mainLoop();
-        optionsTest();
+        studentOptions.add("View Courses");
+        studentOptions.add("View Professors");
+        studentOptions.add("View Classes");
+        studentOptions.add("View Students");
+        studentOptions.add("View Enrollments");
+        studentOptions.add("View Grades");
+        studentOptions.add("Log Out");
+
+        professorOptions.add("View Courses");
+        professorOptions.add("View Students");
+        professorOptions.add("View Grades");
+        professorOptions.add("Grade Assignment(s)");
+        professorOptions.add("Log Out");
+
+        mainLoop();
+        // optionsTest();
     }
 }
