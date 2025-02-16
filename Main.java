@@ -17,6 +17,7 @@ public class Main {
     static Random random = new Random();
     static Scanner input = new Scanner(System.in);
     static Console console = System.console();
+    static Utils pri = new Utils();
 
     static String thisSemester = "Spring 2025";
     
@@ -33,25 +34,25 @@ public class Main {
         Person loggedIn = null;
         while (loggedIn == null) {
             try {
-                Utils.println("Logging in as a Professor(1) or Student(2)? ");
+                pri.ntln("Logging in as a Professor(1) or Student(2)? ");
                 int userType = Integer.parseInt(input.nextLine());
 
                 if (userType != 1 && userType != 2) {
-                    Utils.println("Bad input. Please enter 1 for Professor or 2 for Student.");
+                    pri.ntln("Bad input. Please enter 1 for Professor or 2 for Student.");
                     continue;
 
                 }
 
-                Utils.print("Enter username: ");
+                pri.nt("Enter username: ");
                 String username = input.nextLine();
 
-                Utils.print("Enter password: ");
+                pri.nt("Enter password: ");
                 String password = new String(console.readPassword());
 
                 Person user = Person.logIn(username, password);
                 
                 if (user != null) {
-                    Utils.println("Login successful!\nWelcome, " + user.getName() + "!\n");
+                    pri.ntln("Login successful!\nWelcome, " + user.getName() + "!\n");
                     switch (userType) {
                         case 1:
                             for (Professor prof : professors) {
@@ -71,11 +72,11 @@ public class Main {
                             break;
                     }
                 } else {
-                    Utils.println("Login failed. Please check your username and password and try again.\n\n");
+                    pri.ntln("Login failed. Please check your username and password and try again.\n\n");
                 }
 
             } catch (Exception e) {
-                Utils.println("Something went wrong logging in. Restarting...\n\n");
+                pri.ntln("Something went wrong logging in. Restarting...\n\n");
             }
         }
 
@@ -85,10 +86,10 @@ public class Main {
     public static String studentOptions() {
         Integer choice = null;
         while (choice == null) {
-            Utils.println("\nWhat would you like to do?");
+            pri.ntln("\nWhat would you like to do?");
 
             for (int i = 0; i < studentOptions.size(); i++) {
-                Utils.println(i + 1 + ") " + studentOptions.get(i));
+                pri.ntln(i + 1 + ") " + studentOptions.get(i));
             }
 
             int choiceToBe = Integer.parseInt(input.nextLine());
@@ -96,7 +97,7 @@ public class Main {
             if (choiceToBe > 0 && choiceToBe <= studentOptions.size()) {
                 choice = choiceToBe;
             } else {
-                Utils.println("Invalid input. Please try again.\n");
+                pri.ntln("Invalid input. Please try again.\n");
             }
         }
         return "S" + choice.toString();
@@ -105,10 +106,10 @@ public class Main {
     public static String professorOptions() {
         Integer choice = null;
         while (choice == null) {
-            Utils.println("What would you like to do?");
+            pri.ntln("What would you like to do?");
 
             for (int i = 0; i < professorOptions.size(); i++) {
-                Utils.println(i + 1 + ") " + professorOptions.get(i));
+                pri.ntln(i + 1 + ") " + professorOptions.get(i));
             }
 
             int choiceToBe = Integer.parseInt(input.nextLine());
@@ -116,7 +117,7 @@ public class Main {
             if (choiceToBe > 0 && choiceToBe <= professorOptions.size()) {
                 choice = choiceToBe;
             } else {
-                Utils.println("Invalid input. Please try again.\n");
+                pri.ntln("Invalid input. Please try again.\n");
             }
         }
 
@@ -126,7 +127,7 @@ public class Main {
     public static void mainLoop() {
         Person user = null;
 
-        Utils.println("Welcome to CourseManager 2025");
+        pri.ntln("Welcome to CourseManager 2025");
 
         while (user == null) {
             user = handleLogIn();
@@ -143,47 +144,38 @@ public class Main {
                 }
             }
 
+            //TODO Change the create options method below as well as the options here. This is a shortened list but it makes much more sense than the previous version
             switch (choice) {
-                case "S1":
-                    Utils.println("View Courses is not implemented yet");
-                    break;
-                case "S2":
-                    Utils.println("View Professors is not implemented yet");
-                    break;
+
+                // * Student options
+
                 case "S3":
-                    Utils.println("View Classes is not implemented yet");
-                    break;
-                case "S4":
-                    Utils.println("View Students is not implemented yet");
-                    break;
-                case "S5":
-                    Utils.println("View Enrollments is not implemented yet");
+                    pri.ntln("View Classes/Enrollments is not implemented yet");
                     break;
                 case "S6":
-                    Utils.println("View Grades is not implemented yet");
+                    pri.ntln("View Grades is not implemented yet");
                     break;
                 case "S7":
-                    Utils.println("Log Out is not implemented yet");
+                    pri.ntln("Log Out is not implemented yet");
                     break;
 
+                // * Professor options
+
                 case "P1":
-                    Utils.println("View Courses is not implemented yet");
+                    pri.ntln("Add/View/Edit Courses is not implemented yet");
                     break;
                 case "P2":
-                    Utils.println("View Students is not implemented yet");
+                    pri.ntln("Current students is not implemented yet");
                     break;
                 case "P3":
-                    Utils.println("View Grades is not implemented yet");
-                    break;
-                case "P4":
-                    Utils.println("Grade Assignment(s) is not implemented yet");
+                    pri.ntln("Add/View/Edit Grades is not implemented yet");
                     break;
                 case "P5":
-                    Utils.println("Log Out is not implemented yet");
+                    pri.ntln("Log Out is not implemented yet");
                     break;
             
                 default:
-                    Utils.println("Invalid input. Please try again.\n");
+                    pri.ntln("Invalid input. Please try again.\n");
                     break;
             }
         }
@@ -204,6 +196,7 @@ public class Main {
 
             myWriter.write("\nClasses\n");
             for (Class cls : classes) {
+                // TODO: Update class.toString() to include the meeting spot. This should be the last attribute to be displayed
                 myWriter.write(cls.toString() + "\n");
             }
 
@@ -232,7 +225,7 @@ public class Main {
 
             myWriter.close();
         } catch (IOException err) {
-            Utils.println("Error: " + err);
+            pri.ntln("Error: " + err);
         }
     }
 
@@ -251,7 +244,7 @@ public class Main {
 
         try {
             if (myObj.createNewFile()) {
-                Utils.println("File created: " + myObj.getName());
+                pri.ntln("File created: " + myObj.getName());
                 return 1; // File created
             } else {
                 Scanner reader = new Scanner(myObj);
@@ -294,7 +287,8 @@ public class Main {
                                 course,
                                 getValue(data[3]),
                                 getValue(data[4]),
-                                LocalTime.parse(getValue(data[5]))
+                                LocalTime.parse(getValue(data[5])),
+                                getValue(data[6])
                             ));
                             break;
                         case "Student":
@@ -332,13 +326,13 @@ public class Main {
                 return 2; // File already exists
             }
         } catch (IOException err) {
-            Utils.println("Error: " + err);
+            pri.ntln("Error: " + err);
             return 0; // Error
         }
 
     }
 
-    public static void main(String[] args) {
+    public static void createOptions() {
         //! Adding options to the options' list
         studentOptions.add("View Courses");
         studentOptions.add("View Professors");
@@ -353,7 +347,10 @@ public class Main {
         professorOptions.add("View Grades");
         professorOptions.add("Grade Assignment(s)");
         professorOptions.add("Log Out");
+    }
 
+    public static void main(String[] args) {
+        createOptions();
         loadData();
         mainLoop();
     }

@@ -6,6 +6,12 @@ public class Student extends Person {
     private Department major;
     private double gpa;
     private int gradYear;
+    /*
+    * There are a few Courses. Contains name, description, and department
+        * There are multiple Classes per Course. Contains Professor id, meeting time/spot, etc
+            * Enrollements each have a Class id + Student id. Every Student in a class has an Enrollement
+            *   for that Class
+     */
     private ArrayList<Enrollment> enrollments = new ArrayList<Enrollment>();
     
     public Student (
@@ -59,6 +65,8 @@ public class Student extends Person {
     public void addEnrollment(Enrollment enrollment) {
         this.enrollments.add(enrollment);
     }
+
+    // 
 
     @Override
     public String toString() {

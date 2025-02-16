@@ -10,19 +10,22 @@ public class Class {
     private String professorId;
     private String semester;
     private LocalTime meetingTime;
+    private String meetingSpot; //? eg. "Woodard 130"
 
     public Class(
         String id,
         Course course,
         String professorId,
         String semester,
-        LocalTime meetingTime
+        LocalTime meetingTime,
+        String meetingSpot
     ) {
         this.id = id;
         this.course = course;
         this.professorId = professorId;
         this.semester = semester;
         this.meetingTime = meetingTime;
+        this.meetingSpot = meetingSpot;
     }
 
     public Class(
@@ -30,13 +33,15 @@ public class Class {
         Course course,
         String professorId,
         String semester,
-        LocalTime meetingTime
+        LocalTime meetingTime,
+        String meetingSpot
     ) {
         this.id = String.valueOf(random.nextInt(1000000, 9999999));
         this.course = course;
         this.professorId = professorId;
         this.semester = semester;
         this.meetingTime = meetingTime;
+        this.meetingSpot = meetingSpot;
     }
 
     public String getId() {
@@ -59,6 +64,10 @@ public class Class {
         return this.meetingTime;
     }
 
+    public String getMeetingSpot() {
+        return this.meetingSpot;
+    }
+
     @Override
     public String toString() {
         return "Class" +
@@ -66,6 +75,8 @@ public class Class {
                 "|courseId='" + course.getId() + '\'' +
                 "|professorId='" + professorId + '\'' +
                 "|semester='" + semester + '\'' +
-                "|meetingTime=" + meetingTime;
+                "|meetingTime='" + meetingTime + '\'' +
+                "|meetingSpot='" + meetingSpot + '\'';
+
     }
 }

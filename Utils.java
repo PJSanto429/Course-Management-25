@@ -18,5 +18,17 @@ public class Utils {
             }
         }
     }
+
+    public void ntln(
+        String message
+    ) {
+        println(message);
+    }
+  
+    public void nt(
+        String message
+    ) {
+        print(message);
+    }
 }
  
