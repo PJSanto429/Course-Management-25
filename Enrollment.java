@@ -10,6 +10,16 @@ public class Enrollment {
     private ArrayList<Grade> grades = new ArrayList<Grade>();
     
     public Enrollment(
+        String id,
+        String studentId,
+        String classId
+    ) {
+        this.id = id;
+        this.studentId = studentId;
+        this.classId = classId;
+    }
+
+    public Enrollment(
         Random random,
         String studentId,
         String classId
@@ -43,9 +53,10 @@ public class Enrollment {
         grades.add(grade);
 
         int total = 0;
+        double individualWeight = 100 / grades.size();
 
         for (Grade g : grades) {
-            total += (g.getGrade() * g.getWeight());
+            total += (g.getGrade() * individualWeight);
         }
 
         this.grade = total;
@@ -53,11 +64,11 @@ public class Enrollment {
     
     @Override
     public String toString() {
-        return "Enrollment [" +
-                "id='" + id + '\'' +
-                ", studentId='" + studentId + '\'' +
-                ", classId='" + classId + '\'' +
-                ", grade='" + grade + '\'' +
-                ']';
+        return "Enrollment" +
+                "|id='" + id + '\'' +
+                "|studentId='" + studentId + '\'' +
+                "|classId='" + classId + '\'' +
+                "|grade='" + grade + '\'' +
+                "|grades=" + grades.stream().map(Grade::getId).toList();
     }
 }

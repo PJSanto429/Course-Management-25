@@ -13,6 +13,21 @@ public abstract class Person {
     private String password;
 
     public Person(
+        String id,
+        String name,
+        String email,
+        String username,
+        String password
+    ) {
+        people.add(this);
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
+
+    public Person(
         Random random,
         String name,
         String email,
@@ -43,6 +58,10 @@ public abstract class Person {
         return this.username;
     }
 
+    public String getPassword() {
+        return this.password;
+    }
+
     public static Person logIn(
         String username,
         String password
@@ -56,10 +75,4 @@ public abstract class Person {
         }
         return null;
     }
-
-    @Override
-    public String toString() {
-        return "Person [email=" + email + ", id=" + id + ", name=" + name + ", password=" + password + "]";
-    }
-
 }

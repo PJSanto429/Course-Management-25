@@ -12,6 +12,20 @@ public class Class {
     private LocalTime meetingTime;
 
     public Class(
+        String id,
+        Course course,
+        String professorId,
+        String semester,
+        LocalTime meetingTime
+    ) {
+        this.id = id;
+        this.course = course;
+        this.professorId = professorId;
+        this.semester = semester;
+        this.meetingTime = meetingTime;
+    }
+
+    public Class(
         Random random,
         Course course,
         String professorId,
@@ -47,12 +61,11 @@ public class Class {
 
     @Override
     public String toString() {
-        return "Class {" +
-                "id='" + id + '\'' +
-                ", courseId='" + course.getId() + '\'' +
-                ", professorId='" + professorId + '\'' +
-                ", semester='" + semester + '\'' +
-                ", meetingTime=" + meetingTime +
-                '}';
+        return "Class" +
+                "|id='" + id + '\'' +
+                "|courseId='" + course.getId() + '\'' +
+                "|professorId='" + professorId + '\'' +
+                "|semester='" + semester + '\'' +
+                "|meetingTime=" + meetingTime;
     }
 }

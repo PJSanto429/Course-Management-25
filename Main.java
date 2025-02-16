@@ -2,8 +2,10 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.time.LocalTime;
-import java.util.Map;
-import java.util.HashMap;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Console;
 
 enum Department {
     CompSci,
@@ -14,196 +16,21 @@ public class Main {
 
     static Random random = new Random();
     static Scanner input = new Scanner(System.in);
+    static Console console = System.console();
 
     static String thisSemester = "Spring 2025";
     
-    static ArrayList<Course> courses;
-    static ArrayList<Professor> professors;
+    static ArrayList<Course> courses = new ArrayList<Course>();
+    static ArrayList<Professor> professors = new ArrayList<Professor>();
 
-    static ArrayList<Class> classes;
-    static ArrayList<Student> students;
+    static ArrayList<Class> classes = new ArrayList<Class>();
+    static ArrayList<Student> students = new ArrayList<Student>();
 
     static ArrayList<String> studentOptions = new ArrayList<String>();
     static ArrayList<String> professorOptions = new ArrayList<String>();
-    
-    public static ArrayList<Course> seedCourses() {
-        ArrayList<Course> coursesToReturn = new ArrayList<Course>();
-
-        Course course1 = new Course("CSE 110", "Intro to Software Engineering", "Learn how to build software applications", Department.CompSci);
-        Course course2 = new Course("CSE 111", "Software Engineering 2", "Advanced software applications", Department.CompSci);
-        // Course course3 = new Course("CSE 210", "Physics I", "Introductory Physics", Department.CompSci);
-        // Course course4 = new Course("CSE 211", "Physics II", "Advanced Physics", Department.CompSci);
-
-        coursesToReturn.add(course1);
-        coursesToReturn.add(course2);
-        // coursesToReturn.add(course3);
-        // coursesToReturn.add(course4);
-
-        return coursesToReturn;
-    }
-
-    public static ArrayList<Class> seedClasses(
-        Random random,
-        ArrayList<Course> courses,
-        ArrayList<Professor> professors
-    ) {
-        ArrayList<Class> classesToReturn = new ArrayList<Class>();
-
-        for (int i = 0; i < courses.size(); i++) {
-            Course course = courses.get(i);
-
-            for (int x = 0; x < 1; x++) {
-                classesToReturn.add(new Class(
-                    random,
-                    course,
-                    getRandomProfessorByDepartment(random, professors, course.getDepartment()).getId(),
-                    thisSemester,
-                    LocalTime.of(random.nextInt(8, 12), 0)
-                ));
-            }
-        }
-
-
-        return classesToReturn;
-    }
-
-    public static ArrayList<Professor> seedProfessors(
-        Random random
-    ) {
-        ArrayList<Professor> professorsToReturn = new ArrayList<Professor>();
-
-        professorsToReturn.add(new Professor(
-            random,
-            "Sally Fields",
-            "sfield@school.edu",
-            "sfield",
-            "password123",
-            Department.CompSci,
-            "Doctorate Professor",
-            "Building 1, Room 101"
-        ));
-
-        professorsToReturn.add(new Professor(
-            random,
-            "Sam Smith",
-            "sSmith@school.edu",
-            "ssmith",
-            "password123",
-            Department.CompSci,
-            "Professor",
-            "Building 1, Room 305"
-        ));
-
-        return professorsToReturn;
-    }
-
-    public static Professor getRandomProfessorByDepartment(
-        Random random,
-        ArrayList<Professor> professors,
-        Department department
-    ) {
-        ArrayList<Professor> filteredProfessors = new ArrayList<Professor>();
-
-        for (Professor professor : professors) {
-            if (professor.getDepartment().equals(department)) {
-                filteredProfessors.add(professor);
-            }
-        }
-
-        if (filteredProfessors.size() == 0) {
-            return null;
-        }
-
-        return filteredProfessors.get(random.nextInt(filteredProfessors.size()));
-    }
-
-    public static ArrayList<Student> seedStudents(
-        Random random,
-        ArrayList<Class> classes
-    ) {
-        ArrayList<Student> studentsToReturn = new ArrayList<Student>();
-
-        Student newStudent = new Student(
-            random,
-            "Peyton Santo",
-            "psanto@uncc.edu",
-            "psanto",
-            "mypassword",
-            Department.CompSci,
-            3.5,
-            2025
-        );
-        
-        ArrayList<Class> availClasses = new ArrayList<>();
-
-        for (Class cls : classes) {
-            if (cls.getCourse().getDepartment() == newStudent.getMajor()) {
-                availClasses.add(cls);
-            }
-        }
-
-        for (Class cls : availClasses) {
-            newStudent.addEnrollment(new Enrollment(
-                random,
-                newStudent.getId(),
-                cls.getId()
-            ));
-        }
-
-        studentsToReturn.add(newStudent);
-
-        return studentsToReturn;
-    }
-
-    public static ArrayList<Grade> seedGrades(
-        Random random,
-        Enrollment enrollment
-    ) {
-        ArrayList<Grade> grades = new ArrayList<Grade>();
-
-        Grade grade1 = new Grade(
-            random,
-            0.25,
-            "Assignment 1",
-            "Good job!",
-            90
-        );
-
-        Grade grade2 = new Grade(
-            random,
-            0.25,
-            "Assignment 2",
-            "Good job!",
-            85
-        );
-
-        Grade grade3 = new Grade(
-            random,
-            0.25,
-            "Assignment 3",
-            "Good job!",
-            95
-        );
-
-        Grade grade4 = new Grade(
-            random,
-            0.25,
-            "Assignment 4",
-            "Good job!",
-            100
-        );
-
-        grades.add(grade1);
-        grades.add(grade2);
-        grades.add(grade3);
-        grades.add(grade4);
-
-        return grades;
-    }
 
     public static Person handleLogIn() {
         Person loggedIn = null;
-
         while (loggedIn == null) {
             try {
                 Utils.println("Logging in as a Professor(1) or Student(2)? ");
@@ -219,11 +46,12 @@ public class Main {
                 String username = input.nextLine();
 
                 Utils.print("Enter password: ");
-                String password = input.nextLine();
+                String password = new String(console.readPassword());
 
                 Person user = Person.logIn(username, password);
                 
                 if (user != null) {
+                    Utils.println("Login successful!\nWelcome, " + user.getName() + "!\n");
                     switch (userType) {
                         case 1:
                             for (Professor prof : professors) {
@@ -254,22 +82,10 @@ public class Main {
         return loggedIn;
     }
 
-    public static void optionsTest() {
-        String type = "Student"; // * "Professor"
-
-        ArrayList<String> options = new ArrayList<>();
-        if (type.equals("Student")) {
-            int choice = studentOptions();
-            Utils.println("You chose: " + choice);
-        } else if (type.equals("Professor")) {
-            int choice = professorOptions();
-        }
-    }
-
-    public static int studentOptions() {
+    public static String studentOptions() {
         Integer choice = null;
         while (choice == null) {
-            Utils.println("What would you like to do?");
+            Utils.println("\nWhat would you like to do?");
 
             for (int i = 0; i < studentOptions.size(); i++) {
                 Utils.println(i + 1 + ") " + studentOptions.get(i));
@@ -283,10 +99,10 @@ public class Main {
                 Utils.println("Invalid input. Please try again.\n");
             }
         }
-        return choice;
+        return "S" + choice.toString();
     }
 
-    public static int professorOptions() {
+    public static String professorOptions() {
         Integer choice = null;
         while (choice == null) {
             Utils.println("What would you like to do?");
@@ -304,7 +120,7 @@ public class Main {
             }
         }
 
-        return choice;
+        return "P" + choice.toString();
     }
 
     public static void mainLoop() {
@@ -316,22 +132,214 @@ public class Main {
             user = handleLogIn();
         }
 
-        if (user instanceof Student) {
-            studentOptions();
-        } else if (user instanceof Professor) {
-            professorOptions();
+        boolean running = true;
+        while (running) {
+            String choice = null;
+            while (choice == null) {
+                if (user instanceof Student) {
+                    choice = studentOptions();
+                } else if (user instanceof Professor) {
+                    choice = professorOptions();
+                }
+            }
+
+            switch (choice) {
+                case "S1":
+                    Utils.println("View Courses is not implemented yet");
+                    break;
+                case "S2":
+                    Utils.println("View Professors is not implemented yet");
+                    break;
+                case "S3":
+                    Utils.println("View Classes is not implemented yet");
+                    break;
+                case "S4":
+                    Utils.println("View Students is not implemented yet");
+                    break;
+                case "S5":
+                    Utils.println("View Enrollments is not implemented yet");
+                    break;
+                case "S6":
+                    Utils.println("View Grades is not implemented yet");
+                    break;
+                case "S7":
+                    Utils.println("Log Out is not implemented yet");
+                    break;
+
+                case "P1":
+                    Utils.println("View Courses is not implemented yet");
+                    break;
+                case "P2":
+                    Utils.println("View Students is not implemented yet");
+                    break;
+                case "P3":
+                    Utils.println("View Grades is not implemented yet");
+                    break;
+                case "P4":
+                    Utils.println("Grade Assignment(s) is not implemented yet");
+                    break;
+                case "P5":
+                    Utils.println("Log Out is not implemented yet");
+                    break;
+            
+                default:
+                    Utils.println("Invalid input. Please try again.\n");
+                    break;
+            }
         }
     }
 
+    public static void setData() {
+        try {
+            FileWriter myWriter = new FileWriter("data.txt");
+            myWriter.write("Courses\n");
+            for (Course course : courses) {
+                myWriter.write(course.toString() + "\n");
+            }
+
+            myWriter.write("\nProfessors\n");
+            for (Professor professor : professors) {
+                myWriter.write(professor.toString() + "\n");
+            }
+
+            myWriter.write("\nClasses\n");
+            for (Class cls : classes) {
+                myWriter.write(cls.toString() + "\n");
+            }
+
+            myWriter.write("\nStudents\n");
+            for (Student student : students) {
+                myWriter.write(student.toString() + "\n");
+            }
+
+            myWriter.write("\nEnrollments\n");
+            for (Student student : students) {
+                for (Enrollment enrollment : student.getEnrollments()) {
+                    myWriter.write(enrollment.toString() + "\n");
+                }
+            }
+
+            myWriter.write("\nGrades\n");
+            for (Student student : students) {
+                for (Enrollment enrollment : student.getEnrollments()) {
+                    for (Grade grade : enrollment.getGrades()) {
+                        myWriter.write(grade.toString() + "\n");
+                    }
+                }
+            }
+
+            myWriter.write("\nDONE");
+
+            myWriter.close();
+        } catch (IOException err) {
+            Utils.println("Error: " + err);
+        }
+    }
+
+    public static String getValue(String value) {
+        try {
+            return value.split("=")[1].replace("'", "");
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public static int loadData() {
+        File myObj = new File("data.txt");
+        ArrayList<Grade> grades = new ArrayList<Grade>();
+        ArrayList<Enrollment> enrollments = new ArrayList<Enrollment>();
+
+        try {
+            if (myObj.createNewFile()) {
+                Utils.println("File created: " + myObj.getName());
+                return 1; // File created
+            } else {
+                Scanner reader = new Scanner(myObj);
+
+                while (reader.hasNextLine()) {
+                    String[] data = reader.nextLine().split("\\|");
+
+                    switch (data[0]) {
+                        case "Course":
+                            courses.add(new Course(
+                                getValue(data[1]),
+                                getValue(data[2]),
+                                getValue(data[3]),
+                                Department.valueOf(getValue(data[4]))
+                            ));
+                            break;
+
+                        case "Professor":
+                            professors.add(new Professor(
+                                getValue(data[1]),
+                                getValue(data[2]),
+                                getValue(data[3]),
+                                getValue(data[4]),
+                                getValue(data[5]),
+                                Department.valueOf(getValue(data[6])),
+                                getValue(data[7]),
+                                getValue(data[8])
+                            ));
+                            break;
+                        case "Class":
+                            Course course = null;
+                            for (Course c : courses) {
+                                if (c.getId().equals(getValue(data[2]))) {
+                                    course = c;
+                                    break;
+                                }
+                            }
+                            classes.add(new Class(
+                                getValue(data[1]),
+                                course,
+                                getValue(data[3]),
+                                getValue(data[4]),
+                                LocalTime.parse(getValue(data[5]))
+                            ));
+                            break;
+                        case "Student":
+                            students.add(new Student(
+                                getValue(data[1]),
+                                getValue(data[2]),
+                                getValue(data[3]),
+                                getValue(data[4]),
+                                getValue(data[5]),
+                                Department.valueOf(getValue(data[6])),
+                                Double.parseDouble(getValue(data[7])),
+                                Integer.parseInt(getValue(data[8]))
+                            ));
+                            break;
+                        case "Grade":
+                            grades.add(new Grade(
+                                getValue(data[1]),
+                                getValue(data[2]),
+                                getValue(data[3]),
+                                Double.parseDouble(getValue(data[4]))
+                            ));
+                            break;
+                        case "Enrollment":
+                            enrollments.add(new Enrollment(
+                                getValue(data[1]),
+                                getValue(data[2]),
+                                getValue(data[3])
+                            ));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                reader.close();
+                return 2; // File already exists
+            }
+        } catch (IOException err) {
+            Utils.println("Error: " + err);
+            return 0; // Error
+        }
+
+    }
+
     public static void main(String[] args) {
-
-        // * Seed Data
-        courses = seedCourses();
-        professors = seedProfessors(random);
-
-        classes = seedClasses(random, courses, professors);
-        students = seedStudents(random, classes);
-
+        //! Adding options to the options' list
         studentOptions.add("View Courses");
         studentOptions.add("View Professors");
         studentOptions.add("View Classes");
@@ -346,7 +354,7 @@ public class Main {
         professorOptions.add("Grade Assignment(s)");
         professorOptions.add("Log Out");
 
+        loadData();
         mainLoop();
-        // optionsTest();
     }
 }

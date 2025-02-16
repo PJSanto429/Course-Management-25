@@ -9,6 +9,22 @@ public class Student extends Person {
     private ArrayList<Enrollment> enrollments = new ArrayList<Enrollment>();
     
     public Student (
+        String id,
+        String name,
+        String email,
+        String username,
+        String password,
+        Department major,
+        double gpa,
+        int gradYear
+    ) {
+        super(id, name, email, username, password);
+        this.major = major;
+        this.gpa = gpa;
+        this.gradYear = gradYear;
+    }
+
+    public Student (
         Random random,
         String name,
         String email,
@@ -46,13 +62,13 @@ public class Student extends Person {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "name='" + getName() + '\'' +
-                ", email='" + getEmail() + '\'' +
-                ", major=" + major +
-                ", gpa=" + gpa +
-                ", gradYear=" + gradYear +
-                '}';
+        return "Student" +
+                "|id='" + getId() + '\'' +
+                "|name='" + getName() + '\'' +
+                "|email='" + getEmail() + '\'' +
+                "|major=" + major +
+                "|gpa=" + gpa +
+                "|gradYear=" + gradYear;
     }
 
 }
