@@ -19,6 +19,14 @@ public class Utils {
         }
     }
 
+    public void invalidInput() {
+        ntln("Invalid Input. Please try again.\n");
+    }
+
+    public void spacer() {
+        System.err.println("---------------------------------------------------");
+    }
+
     public void ntln(
         String message
     ) {

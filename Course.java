@@ -17,8 +17,8 @@ public class Course {
         this.department = department;
     }
     
-    public Department getDepartment() {
-        return this.department;
+    public String getDepartment() {
+        return this.department.toString();
     }
 
     public String getId() {

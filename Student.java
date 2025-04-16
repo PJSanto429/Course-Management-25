@@ -3,6 +3,7 @@ import java.util.Random;
 
 public class Student extends Person {
 
+    private static Utils pri = new Utils();
     private Department major;
     private double gpa;
     private int gradYear;
@@ -66,7 +67,27 @@ public class Student extends Person {
         this.enrollments.add(enrollment);
     }
 
-    // 
+    public void viewEnrollments() {
+        pri.ntln("Enrollments for " + this.getName());
+        pri.spacer();
+        for (Enrollment enrollment : enrollments) {
+            Class cls = enrollment.getEnrClass();
+
+            pri.ntln(cls.getCourse().getName() + "(" + cls.getCourse().getDepartment() + ")");
+            pri.ntln(cls.getCourse().getDescription());
+            pri.ntln(cls.getProfessor().getName());
+            pri.ntln(cls.getMeetingSpot() + " - " + cls.getMeetingTime());
+            pri.ntln("Grade: " + enrollment.getGrade() + "%");
+            pri.spacer();
+        }
+    }
+
+    public void viewGrades() {
+        pri.ntln("Grades for " + this.getName() + ":");
+        for (Enrollment enr : this.getEnrollments()) {
+            pri.ntln(enr.getName() + ": " + enr.getGrade() + "%");
+        }
+    }
 
     @Override
     public String toString() {

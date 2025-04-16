@@ -5,28 +5,28 @@ public class Enrollment {
     
     private String id;
     private String studentId;
-    private String classId;
+    private Class enrClass;
     private float grade;
     private ArrayList<Grade> grades = new ArrayList<Grade>();
     
     public Enrollment(
         String id,
         String studentId,
-        String classId
+        Class enrClass
     ) {
         this.id = id;
         this.studentId = studentId;
-        this.classId = classId;
+        this.enrClass = enrClass;
     }
 
     public Enrollment(
         Random random,
         String studentId,
-        String classId
+        Class enrClass
     ) {
         this.id = String.valueOf(random.nextInt(1000000, 9999999));
         this.studentId = studentId;
-        this.classId = classId;
+        this.enrClass = enrClass;
     }
     
     public String getId() {
@@ -37,8 +37,12 @@ public class Enrollment {
         return this.studentId;
     }
     
-    public String getClassId() {
-        return this.classId;
+    public Class getEnrClass() {
+        return this.enrClass;
+    }
+
+    public String getName() {
+        return this.enrClass.getCourse().getName();
     }
     
     public float getGrade() {
@@ -67,7 +71,7 @@ public class Enrollment {
         return "Enrollment" +
                 "|id='" + id + '\'' +
                 "|studentId='" + studentId + '\'' +
-                "|classId='" + classId + '\'' +
+                "|classId='" + enrClass.getId() + '\'' +
                 "|grade='" + grade + '\'' +
                 "|grades=" + grades.stream().map(Grade::getId).toList();
     }

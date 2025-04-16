@@ -34,6 +34,7 @@ public class Main {
         Person loggedIn = null;
         while (loggedIn == null) {
             try {
+                pri.spacer();
                 pri.ntln("Logging in as a Professor(1) or Student(2)? ");
                 int userType = Integer.parseInt(input.nextLine());
 
@@ -83,7 +84,9 @@ public class Main {
         return loggedIn;
     }
 
-    public static String studentOptions() {
+    public static Boolean studentOptions(
+        Student student
+    ) {
         Integer choice = null;
         while (choice == null) {
             pri.ntln("\nWhat would you like to do?");
@@ -97,13 +100,31 @@ public class Main {
             if (choiceToBe > 0 && choiceToBe <= studentOptions.size()) {
                 choice = choiceToBe;
             } else {
-                pri.ntln("Invalid input. Please try again.\n");
+                pri.invalidInput();
             }
         }
-        return "S" + choice.toString();
+
+        switch (choice) {
+            case 1:
+                student.viewEnrollments();
+                return true;
+            case 2:
+                student.viewGrades();
+                return true;
+            case 3:
+                pri.ntln("Logging out.... Please Wait....");
+                pri.ntln("Log out successful.");
+                return false;
+            default:
+                pri.invalidInput();;
+                return true;
+        }
     }
 
-    public static String professorOptions() {
+    public static Boolean professorOptions(
+        Professor professor
+    ) {
+        // TODO: Rework all of this to do the same thing as studentOptions
         Integer choice = null;
         while (choice == null) {
             pri.ntln("What would you like to do?");
@@ -117,66 +138,73 @@ public class Main {
             if (choiceToBe > 0 && choiceToBe <= professorOptions.size()) {
                 choice = choiceToBe;
             } else {
-                pri.ntln("Invalid input. Please try again.\n");
+                pri.invalidInput();
+            }
+
+            switch (choice) {
+                case 1:
+                    // TODO in professor, work on the function marked with TODO. Here, give the method all the classes
+                    professor.manageClasses(classes);
+                    return true;
+                case 2:
+                    pri.ntln("Current students not implemented");
+                    return true;
+                case 3:
+                    pri.ntln("Add/View/Edit Grades not implemented");
+                    return true;
+                case 4:
+                    pri.ntln("Logging out.... Please Wait....");
+                    pri.ntln("Log out successful.");
+                    return false;
+                default:
+                    pri.invalidInput();
+                    return true;
             }
         }
 
-        return "P" + choice.toString();
+        return true;
     }
 
     public static void mainLoop() {
-        Person user = null;
-
+        
         pri.ntln("Welcome to CourseManager 2025");
-
-        while (user == null) {
-            user = handleLogIn();
-        }
-
+        
         boolean running = true;
+        Person user = null;
         while (running) {
-            String choice = null;
-            while (choice == null) {
-                if (user instanceof Student) {
-                    choice = studentOptions();
-                } else if (user instanceof Professor) {
-                    choice = professorOptions();
+
+            while (user == null && running == true) {
+
+                Integer choice = null;
+                while (choice == null) {
+
+                    pri.nt("Login(1) or Terminate System(2): ");
+                    choice =  Integer.parseInt(input.nextLine());
+                    switch (choice) {
+                        case 1:
+                            user = handleLogIn();
+                            break;
+                        case 2:
+                            pri.ntln("Terminating System.... Please Wait....");
+                            pri.ntln("System successfully terminated.");
+                            running = false;
+                            break;
+                        default:
+                            choice = null;
+                            pri.invalidInput();
+                            break;
+                    }
                 }
             }
-
-            //TODO Change the create options method below as well as the options here. This is a shortened list but it makes much more sense than the previous version
-            switch (choice) {
-
-                // * Student options
-
-                case "S3":
-                    pri.ntln("View Classes/Enrollments is not implemented yet");
-                    break;
-                case "S6":
-                    pri.ntln("View Grades is not implemented yet");
-                    break;
-                case "S7":
-                    pri.ntln("Log Out is not implemented yet");
-                    break;
-
-                // * Professor options
-
-                case "P1":
-                    pri.ntln("Add/View/Edit Courses is not implemented yet");
-                    break;
-                case "P2":
-                    pri.ntln("Current students is not implemented yet");
-                    break;
-                case "P3":
-                    pri.ntln("Add/View/Edit Grades is not implemented yet");
-                    break;
-                case "P5":
-                    pri.ntln("Log Out is not implemented yet");
-                    break;
             
-                default:
-                    pri.ntln("Invalid input. Please try again.\n");
-                    break;
+            Boolean loggedIn = false;
+            if (user instanceof Student) {
+                loggedIn = studentOptions((Student) user);
+            } else if (user instanceof Professor) {
+                loggedIn = professorOptions((Professor) user);
+            }
+            if (!loggedIn) {
+                user = null;
             }
         }
     }
@@ -196,7 +224,6 @@ public class Main {
 
             myWriter.write("\nClasses\n");
             for (Class cls : classes) {
-                // TODO: Update class.toString() to include the meeting spot. This should be the last attribute to be displayed
                 myWriter.write(cls.toString() + "\n");
             }
 
@@ -282,10 +309,17 @@ public class Main {
                                     break;
                                 }
                             }
+
+                            Professor professor = null;
+                            for (Professor prof : professors) {
+                                if (prof.getId().equals(getValue(data[3]))) {
+                                    professor = prof;
+                                }
+                            }
                             classes.add(new Class(
                                 getValue(data[1]),
                                 course,
-                                getValue(data[3]),
+                                professor,
                                 getValue(data[4]),
                                 LocalTime.parse(getValue(data[5])),
                                 getValue(data[6])
@@ -312,10 +346,17 @@ public class Main {
                             ));
                             break;
                         case "Enrollment":
+                            Class enrClass = null;
+                            for (Class cls : classes) {
+                                if (cls.getId().equals(getValue(data[3]))) {
+                                    enrClass = cls;
+                                    break;
+                                }
+                            }
                             enrollments.add(new Enrollment(
                                 getValue(data[1]),
                                 getValue(data[2]),
-                                getValue(data[3])
+                                enrClass
                             ));
                             break;
                         default:
@@ -323,35 +364,39 @@ public class Main {
                     }
                 }
                 reader.close();
+                for (Student student : students) {
+                    for (Enrollment enrl : enrollments) {
+                        if (enrl.getStudentId().equals(student.getId())) {
+                            student.addEnrollment(enrl);
+                        }
+                    }
+                }
                 return 2; // File already exists
             }
         } catch (IOException err) {
             pri.ntln("Error: " + err);
             return 0; // Error
         }
-
     }
 
     public static void createOptions() {
         //! Adding options to the options' list
-        studentOptions.add("View Courses");
-        studentOptions.add("View Professors");
-        studentOptions.add("View Classes");
-        studentOptions.add("View Students");
-        studentOptions.add("View Enrollments");
+        studentOptions.add("View Classes/Enrollments");
         studentOptions.add("View Grades");
         studentOptions.add("Log Out");
 
-        professorOptions.add("View Courses");
-        professorOptions.add("View Students");
-        professorOptions.add("View Grades");
-        professorOptions.add("Grade Assignment(s)");
+        professorOptions.add("Add/View/Edit Classes");
+        professorOptions.add("Current Students");
+        professorOptions.add("Add/View/Edit Grades");
         professorOptions.add("Log Out");
     }
 
     public static void main(String[] args) {
         createOptions();
         loadData();
-        mainLoop();
+        // mainLoop();
+
+        // students.get(0).viewGrades();
+        professors.get(0).manageClasses(classes);
     }
 }

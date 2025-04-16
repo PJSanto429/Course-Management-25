@@ -7,7 +7,7 @@ public class Class {
 
     private String id;
     private Course course;
-    private String professorId;
+    private Professor professor;
     private String semester;
     private LocalTime meetingTime;
     private String meetingSpot; //? eg. "Woodard 130"
@@ -15,14 +15,14 @@ public class Class {
     public Class(
         String id,
         Course course,
-        String professorId,
+        Professor professor,
         String semester,
         LocalTime meetingTime,
         String meetingSpot
     ) {
         this.id = id;
         this.course = course;
-        this.professorId = professorId;
+        this.professor = professor;
         this.semester = semester;
         this.meetingTime = meetingTime;
         this.meetingSpot = meetingSpot;
@@ -31,14 +31,14 @@ public class Class {
     public Class(
         Random random,
         Course course,
-        String professorId,
+        Professor professor,
         String semester,
         LocalTime meetingTime,
         String meetingSpot
     ) {
         this.id = String.valueOf(random.nextInt(1000000, 9999999));
         this.course = course;
-        this.professorId = professorId;
+        this.professor = professor;
         this.semester = semester;
         this.meetingTime = meetingTime;
         this.meetingSpot = meetingSpot;
@@ -52,8 +52,12 @@ public class Class {
         return this.course;
     }
 
-    public String getProfessorId() {
-        return this.professorId;
+    public Professor getProfessor() {
+        return this.professor;
+    }
+
+    public String getName() {
+        return this.course.getName();
     }
 
     public String getSemester() {
@@ -73,7 +77,7 @@ public class Class {
         return "Class" +
                 "|id='" + id + '\'' +
                 "|courseId='" + course.getId() + '\'' +
-                "|professorId='" + professorId + '\'' +
+                "|professorId='" + professor.getId() + '\'' +
                 "|semester='" + semester + '\'' +
                 "|meetingTime='" + meetingTime + '\'' +
                 "|meetingSpot='" + meetingSpot + '\'';
