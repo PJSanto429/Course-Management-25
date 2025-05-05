@@ -12,11 +12,14 @@ public class Enrollment {
     public Enrollment(
         String id,
         String studentId,
-        Class enrClass
+        Class enrClass,
+        ArrayList<Grade> grades
     ) {
         this.id = id;
         this.studentId = studentId;
         this.enrClass = enrClass;
+        this.grades = grades;
+        calculateGrade();
     }
 
     public Enrollment(
@@ -42,10 +45,14 @@ public class Enrollment {
     }
 
     public String getName() {
+        if (this.enrClass.getCourse() == null) {
+            return "No course assigned";
+        }
         return this.enrClass.getCourse().getName();
     }
     
     public float getGrade() {
+        calculateGrade();
         return this.grade;
     }
 
@@ -53,8 +60,11 @@ public class Enrollment {
         return this.grades;
     }
 
-    public void addGrade(Grade grade) {
-        grades.add(grade);
+    public void calculateGrade() {
+        if (grades.size() == 0) {
+            this.grade = 100;
+            return;
+        }
 
         int total = 0;
         double individualWeight = 100 / grades.size();
@@ -63,7 +73,13 @@ public class Enrollment {
             total += (g.getGrade() * individualWeight);
         }
 
-        this.grade = total;
+        this.grade = total / 100;
+    }
+    
+    public void addGrade(Grade grade) {
+        grades.add(grade);
+
+        calculateGrade();
     }
     
     @Override

@@ -3,13 +3,13 @@ public class Course {
     private String id;
     private String name;
     private String description;
-    private Department department;
+    private String department;
 
     public Course(
         String id,
         String name,
         String description,
-        Department department
+        String department
     ) {
         this.id = id;
         this.name = name;

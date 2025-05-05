@@ -4,7 +4,7 @@ import java.util.Random;
 public class Student extends Person {
 
     private static Utils pri = new Utils();
-    private Department major;
+    private String major;
     private double gpa;
     private int gradYear;
     /*
@@ -21,7 +21,7 @@ public class Student extends Person {
         String email,
         String username,
         String password,
-        Department major,
+        String major,
         double gpa,
         int gradYear
     ) {
@@ -37,7 +37,7 @@ public class Student extends Person {
         String email,
         String username,
         String password,
-        Department major,
+        String major,
         double gpa,
         int gradYear
     ) {
@@ -47,7 +47,7 @@ public class Student extends Person {
         this.gradYear = gradYear;
     }
 
-    public Department getMajor() {
+    public String getMajor() {
         return this.major;
     }
 
@@ -63,6 +63,16 @@ public class Student extends Person {
         return this.enrollments;
     }
 
+    public void removeEnrollment(String enrollmentId) {
+        for (int i = 0; i < this.enrollments.size(); i++) {
+            Enrollment enrollment = this.enrollments.get(i);
+            if (enrollment.getId().equals(enrollmentId)) {
+                this.enrollments.remove(i);
+                return;
+            }
+        }
+    }
+
     public void addEnrollment(Enrollment enrollment) {
         this.enrollments.add(enrollment);
     }
@@ -72,12 +82,14 @@ public class Student extends Person {
         pri.spacer();
         for (Enrollment enrollment : enrollments) {
             Class cls = enrollment.getEnrClass();
+            if (cls == null) {
+                continue;
+            }
 
             pri.ntln(cls.getCourse().getName() + "(" + cls.getCourse().getDepartment() + ")");
             pri.ntln(cls.getCourse().getDescription());
             pri.ntln(cls.getProfessor().getName());
             pri.ntln(cls.getMeetingSpot() + " - " + cls.getMeetingTime());
-            pri.ntln("Grade: " + enrollment.getGrade() + "%");
             pri.spacer();
         }
     }
@@ -92,12 +104,14 @@ public class Student extends Person {
     @Override
     public String toString() {
         return "Student" +
-                "|id='" + getId() + '\'' +
-                "|name='" + getName() + '\'' +
-                "|email='" + getEmail() + '\'' +
-                "|major=" + major +
-                "|gpa=" + gpa +
-                "|gradYear=" + gradYear;
+            "|id='" + getId() + '\'' +
+            "|name='" + getName() + '\'' +
+            "|email='" + getEmail() + '\'' +
+            "|username='" + getUsername() + '\'' +
+            "|password='" + getPassword() + '\'' +
+            "|major=" + major +
+            "|gpa=" + gpa +
+            "|gradYear=" + gradYear;
     }
 
 }

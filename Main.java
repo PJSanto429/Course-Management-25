@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.time.LocalTime;
@@ -116,7 +117,7 @@ public class Main {
                 pri.ntln("Log out successful.");
                 return false;
             default:
-                pri.invalidInput();;
+                pri.invalidInput();
                 return true;
         }
     }
@@ -124,7 +125,6 @@ public class Main {
     public static Boolean professorOptions(
         Professor professor
     ) {
-        // TODO: Rework all of this to do the same thing as studentOptions
         Integer choice = null;
         while (choice == null) {
             pri.ntln("What would you like to do?");
@@ -143,14 +143,33 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    // TODO in professor, work on the function marked with TODO. Here, give the method all the classes
-                    professor.manageClasses(classes);
+                    classes = professor.manageClasses(classes, courses);
+                    ArrayList<String> classIds = new ArrayList<String>();
+                    for (Class cls : classes) {
+                        classIds.add(cls.getId());
+                    }
+
+                    for (Student student : students) {
+                        ArrayList<Enrollment> studentEnrollments = student.getEnrollments();
+                        List<Enrollment> toRemove = new ArrayList<>();
+
+                        for (Enrollment enrollment : studentEnrollments) {
+                            if (!classIds.contains(enrollment.getEnrClass().getId())) {
+                                toRemove.add(enrollment);
+                            }
+                        }
+
+                        for (Enrollment enrollment : toRemove) {
+                            student.removeEnrollment(enrollment.getId());
+                        }
+                    }
+
                     return true;
                 case 2:
-                    pri.ntln("Current students not implemented");
+                    professor.displayStudents(students, classes, false);
                     return true;
                 case 3:
-                    pri.ntln("Add/View/Edit Grades not implemented");
+                    professor.addGrades(classes, students);
                     return true;
                 case 4:
                     pri.ntln("Logging out.... Please Wait....");
@@ -170,7 +189,7 @@ public class Main {
         pri.ntln("Welcome to CourseManager 2025");
         
         boolean running = true;
-        Person user = null;
+        Person user = null;//professors.get(0);
         while (running) {
 
             while (user == null && running == true) {
@@ -179,7 +198,7 @@ public class Main {
                 while (choice == null) {
 
                     pri.nt("Login(1) or Terminate System(2): ");
-                    choice =  Integer.parseInt(input.nextLine());
+                    choice = Integer.parseInt(input.nextLine());
                     switch (choice) {
                         case 1:
                             user = handleLogIn();
@@ -232,19 +251,19 @@ public class Main {
                 myWriter.write(student.toString() + "\n");
             }
 
-            myWriter.write("\nEnrollments\n");
-            for (Student student : students) {
-                for (Enrollment enrollment : student.getEnrollments()) {
-                    myWriter.write(enrollment.toString() + "\n");
-                }
-            }
-
             myWriter.write("\nGrades\n");
             for (Student student : students) {
                 for (Enrollment enrollment : student.getEnrollments()) {
                     for (Grade grade : enrollment.getGrades()) {
                         myWriter.write(grade.toString() + "\n");
                     }
+                }
+            }
+
+            myWriter.write("\nEnrollments\n");
+            for (Student student : students) {
+                for (Enrollment enrollment : student.getEnrollments()) {
+                    myWriter.write(enrollment.toString() + "\n");
                 }
             }
 
@@ -285,7 +304,7 @@ public class Main {
                                 getValue(data[1]),
                                 getValue(data[2]),
                                 getValue(data[3]),
-                                Department.valueOf(getValue(data[4]))
+                                getValue(data[4])
                             ));
                             break;
 
@@ -296,7 +315,7 @@ public class Main {
                                 getValue(data[3]),
                                 getValue(data[4]),
                                 getValue(data[5]),
-                                Department.valueOf(getValue(data[6])),
+                                getValue(data[6]),
                                 getValue(data[7]),
                                 getValue(data[8])
                             ));
@@ -332,17 +351,9 @@ public class Main {
                                 getValue(data[3]),
                                 getValue(data[4]),
                                 getValue(data[5]),
-                                Department.valueOf(getValue(data[6])),
+                                getValue(data[6]),
                                 Double.parseDouble(getValue(data[7])),
                                 Integer.parseInt(getValue(data[8]))
-                            ));
-                            break;
-                        case "Grade":
-                            grades.add(new Grade(
-                                getValue(data[1]),
-                                getValue(data[2]),
-                                getValue(data[3]),
-                                Double.parseDouble(getValue(data[4]))
                             ));
                             break;
                         case "Enrollment":
@@ -353,10 +364,33 @@ public class Main {
                                     break;
                                 }
                             }
+                            data[5] = getValue(data[5]).replace("[", "").replace("]", "").replace("\"", "");
+                            String[] test = data[5].split(",");
+
+                            ArrayList<Grade> enrGrades = new ArrayList<Grade>();
+                            if (test.length > 1) {
+                                for (String str : test) {
+                                    for (Grade g : grades) {
+                                        if (g.getId().equals(str)) {
+                                            enrGrades.add(g);
+                                        }
+                                    }
+                                }
+                            }
+
                             enrollments.add(new Enrollment(
                                 getValue(data[1]),
                                 getValue(data[2]),
-                                enrClass
+                                enrClass,
+                                enrGrades
+                            ));
+                            break;
+                        case "Grade":
+                            grades.add(new Grade(
+                                getValue(data[1]),
+                                getValue(data[2]),
+                                getValue(data[3]),
+                                Double.parseDouble(getValue(data[4]))
                             ));
                             break;
                         default:
@@ -386,17 +420,16 @@ public class Main {
         studentOptions.add("Log Out");
 
         professorOptions.add("Add/View/Edit Classes");
-        professorOptions.add("Current Students");
-        professorOptions.add("Add/View/Edit Grades");
+        professorOptions.add("View Current Students");
+        professorOptions.add("Add Grades");
         professorOptions.add("Log Out");
     }
 
     public static void main(String[] args) {
         createOptions();
         loadData();
-        // mainLoop();
+        mainLoop();
 
-        // students.get(0).viewGrades();
-        professors.get(0).manageClasses(classes);
+        setData();
     }
 }
