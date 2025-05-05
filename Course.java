@@ -3,13 +3,13 @@ public class Course {
     private String id;
     private String name;
     private String description;
-    private Department department;
+    private String department;
 
     public Course(
         String id,
         String name,
         String description,
-        Department department
+        String department
     ) {
         this.id = id;
         this.name = name;
@@ -17,8 +17,8 @@ public class Course {
         this.department = department;
     }
     
-    public Department getDepartment() {
-        return this.department;
+    public String getDepartment() {
+        return this.department.toString();
     }
 
     public String getId() {
