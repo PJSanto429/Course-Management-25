@@ -1,0 +1,129 @@
+Courses
+Course|id='CSE 110'|name='Intro to Software Engineering'|description='Learn how to build software applications'|department='CompSci'
+Course|id='CSE 111'|name='Software Engineering 2'|description='Advanced software applications'|department='CompSci'
+Course|id='CSE 112'|name='Software Testing'|description='Testing software for bugs and security'|department='CompSci'
+Course|id='CSE 113'|name='Software Architecture'|description='Designing large-scale software systems'|department='CompSci'
+Course|id='CSE 114'|name='Agile Development'|description='Learn Agile and Scrum methods'|department='CompSci'
+
+Professors
+Professor|id='5598332'|name='Sally Fields'|email='sfield@school.edu'|username='sfield'|password='password123'|department=CompSci|title='Doctorate Professor'|office='Building 1, Room 101'
+Professor|id='6554484'|name='Sam Smith'|email='sSmith@school.edu'|username='ssmith'|password='password123'|department=CompSci|title='Professor'|office='Building 1, Room 305'
+
+Classes
+Class|id='5676877'|courseId='CSE 110'|professorId='6554484'|semester='Spring 2025'|meetingTime='09:00'|meetingSpot='Woodward 130'
+Class|id='8076617'|courseId='CSE 111'|professorId='5598332'|semester='Spring 2025'|meetingTime='10:00'|meetingSpot='Woodward 135'
+Class|id='5676880'|courseId='CSE 112'|professorId='6554484'|semester='Spring 2025'|meetingTime='11:00'|meetingSpot='Woodward 140'
+Class|id='5676882'|courseId='CSE 114'|professorId='6554484'|semester='Spring 2025'|meetingTime='13:00'|meetingSpot='Woodward 150'
+
+Students
+Student|id='7061475'|name='Peyton Santo'|email='psanto@uncc.edu'|username='psanto'|password='password123'|major=CompSci|gpa=3.5|gradYear=2025
+Student|id='7061476'|name='Taylor Benson'|email='tbenson@uncc.edu'|username='tbenson'|password='password123'|major=CompSci|gpa=3.4|gradYear=2026
+Student|id='7061477'|name='Morgan Diaz'|email='mdiaz@uncc.edu'|username='mdiaz'|password='password123'|major=CompSci|gpa=3.6|gradYear=2025
+Student|id='7061478'|name='Cameron Ford'|email='cford@uncc.edu'|username='cford'|password='password123'|major=CompSci|gpa=3.7|gradYear=2026
+Student|id='7061479'|name='Riley Nguyen'|email='rnguyen@uncc.edu'|username='rnguyen'|password='password123'|major=CompSci|gpa=3.3|gradYear=2025
+Student|id='7061480'|name='Casey Patel'|email='cpatel@uncc.edu'|username='cpatel'|password='password123'|major=CompSci|gpa=3.8|gradYear=2025
+Student|id='7061481'|name='Alex Kim'|email='akim@uncc.edu'|username='akim'|password='password123'|major=CompSci|gpa=3.2|gradYear=2026
+Student|id='7061482'|name='Jamie Rivers'|email='jrivers@uncc.edu'|username='jrivers'|password='password123'|major=CompSci|gpa=3.5|gradYear=2025
+Student|id='7061483'|name='Drew Parker'|email='dparker@uncc.edu'|username='dparker'|password='password123'|major=CompSci|gpa=3.1|gradYear=2025
+Student|id='7061484'|name='Jordan Scott'|email='jscott@uncc.edu'|username='jscott'|password='password123'|major=CompSci|gpa=3.7|gradYear=2026
+Student|id='7061485'|name='Charlie Lopez'|email='clopez@uncc.edu'|username='clopez'|password='password123'|major=CompSci|gpa=3.6|gradYear=2025
+Student|id='7061486'|name='Sydney Clark'|email='sclark@uncc.edu'|username='sclark'|password='password123'|major=CompSci|gpa=3.9|gradYear=2025
+Student|id='7061487'|name='Quinn Foster'|email='qfoster@uncc.edu'|username='qfoster'|password='password123'|major=CompSci|gpa=3.3|gradYear=2025
+Student|id='7061488'|name='Casey Morgan'|email='cmorgan@uncc.edu'|username='cmorgan'|password='password123'|major=CompSci|gpa=3.2|gradYear=2025
+Student|id='7061489'|name='Dylan Turner'|email='dturner@uncc.edu'|username='dturner'|password='password123'|major=CompSci|gpa=3.8|gradYear=2026
+Student|id='7061490'|name='Reese Murphy'|email='rmurphy@uncc.edu'|username='rmurphy'|password='password123'|major=CompSci|gpa=3.4|gradYear=2025
+Student|id='7061491'|name='Emerson Lane'|email='elane@uncc.edu'|username='elane'|password='password123'|major=CompSci|gpa=3.7|gradYear=2025
+Student|id='7061492'|name='Blake Bailey'|email='bbailey@uncc.edu'|username='bbailey'|password='password123'|major=CompSci|gpa=3.1|gradYear=2026
+Student|id='7061493'|name='Hayden Brooks'|email='hbrooks@uncc.edu'|username='hbrooks'|password='password123'|major=CompSci|gpa=3.2|gradYear=2025
+Student|id='7061494'|name='Skylar Bell'|email='sbell@uncc.edu'|username='sbell'|password='password123'|major=CompSci|gpa=3.5|gradYear=2026
+Student|id='7061495'|name='Avery Reed'|email='areed@uncc.edu'|username='areed'|password='password123'|major=CompSci|gpa=3.9|gradYear=2025
+Student|id='7061496'|name='Dakota Gray'|email='dgray@uncc.edu'|username='dgray'|password='password123'|major=CompSci|gpa=3.6|gradYear=2026
+Student|id='7061497'|name='Sage Simmons'|email='ssimmons@uncc.edu'|username='ssimmons'|password='password123'|major=CompSci|gpa=3.7|gradYear=2025
+Student|id='7061498'|name='Frankie Hart'|email='fhart@uncc.edu'|username='fhart'|password='password123'|major=CompSci|gpa=3.4|gradYear=2025
+Student|id='7061499'|name='Robin Kerr'|email='rkerr@uncc.edu'|username='rkerr'|password='password123'|major=CompSci|gpa=3.3|gradYear=2026
+
+Grades
+Grade|id='1205207'|assignmentName='Midterm progress report'|comments='Nice job. youre really killing!'|grade='98.0'
+
+Enrollments
+Enrollment|id='6156423'|studentId='7061475'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='4220437'|studentId='7061475'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000001'|studentId='7061475'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000003'|studentId='7061476'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000004'|studentId='7061476'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000005'|studentId='7061476'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000007'|studentId='7061477'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000008'|studentId='7061477'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000009'|studentId='7061477'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000011'|studentId='7061478'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000012'|studentId='7061478'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000013'|studentId='7061478'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000014'|studentId='7061478'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000016'|studentId='7061479'|classId='8076617'|grade='98.0'|grades=[1205207]
+Enrollment|id='8000017'|studentId='7061479'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000018'|studentId='7061479'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000020'|studentId='7061480'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000021'|studentId='7061480'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000022'|studentId='7061480'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000023'|studentId='7061481'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000024'|studentId='7061481'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000025'|studentId='7061481'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000027'|studentId='7061481'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000028'|studentId='7061482'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000030'|studentId='7061482'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000031'|studentId='7061482'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000032'|studentId='7061483'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000033'|studentId='7061483'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000035'|studentId='7061483'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000036'|studentId='7061484'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000037'|studentId='7061484'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000039'|studentId='7061484'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000040'|studentId='7061485'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000041'|studentId='7061485'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000042'|studentId='7061485'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000044'|studentId='7061486'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000045'|studentId='7061486'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000047'|studentId='7061486'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000048'|studentId='7061487'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000049'|studentId='7061487'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000050'|studentId='7061487'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000051'|studentId='7061487'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000052'|studentId='7061488'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000053'|studentId='7061488'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000055'|studentId='7061488'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000056'|studentId='7061489'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000057'|studentId='7061489'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000059'|studentId='7061489'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000060'|studentId='7061490'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000061'|studentId='7061490'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000063'|studentId='7061490'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000064'|studentId='7061491'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000065'|studentId='7061491'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000067'|studentId='7061491'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000068'|studentId='7061492'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000069'|studentId='7061492'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000071'|studentId='7061492'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000072'|studentId='7061493'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000073'|studentId='7061493'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000074'|studentId='7061493'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000076'|studentId='7061494'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000077'|studentId='7061494'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000079'|studentId='7061494'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000080'|studentId='7061495'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000081'|studentId='7061495'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000082'|studentId='7061495'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000083'|studentId='7061495'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000084'|studentId='7061496'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000085'|studentId='7061496'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000087'|studentId='7061496'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000088'|studentId='7061497'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000089'|studentId='7061497'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000090'|studentId='7061497'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000092'|studentId='7061498'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000093'|studentId='7061498'|classId='5676880'|grade='100.0'|grades=[]
+Enrollment|id='8000095'|studentId='7061498'|classId='5676882'|grade='100.0'|grades=[]
+Enrollment|id='8000096'|studentId='7061499'|classId='5676877'|grade='100.0'|grades=[]
+Enrollment|id='8000097'|studentId='7061499'|classId='8076617'|grade='100.0'|grades=[]
+Enrollment|id='8000098'|studentId='7061499'|classId='5676880'|grade='100.0'|grades=[]
+
+DONE
